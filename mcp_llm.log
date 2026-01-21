@@ -1,0 +1,61 @@
+LLM call failed
+Traceback (most recent call last):
+  File "/Users/kanishkkapoor/Desktop/dataAnalytics/ProductDataPipeline/mcp_server/llm_adapter.py", line 76, in call_llm_for_payload
+    resp = openai.ChatCompletion.create(
+        model=model,
+    ...<6 lines>...
+        n=1,
+    )
+  File "/opt/miniconda3/lib/python3.13/site-packages/openai/lib/_old_api.py", line 39, in __call__
+    raise APIRemovedInV1(symbol=self._symbol)
+openai.lib._old_api.APIRemovedInV1: 
+
+You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.
+
+You can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. 
+
+Alternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`
+
+A detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742
+
+2025-11-16 15:01:21,376 ERROR LLM call failed
+Traceback (most recent call last):
+  File "/Users/kanishkkapoor/Desktop/dataAnalytics/ProductDataPipeline/mcp_server/llm_adapter.py", line 81, in call_llm_for_payload
+    resp = _client.chat.create(
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Chat' object has no attribute 'create'
+2025-11-16 15:15:34,725 ERROR Failed to init OpenAI client
+Traceback (most recent call last):
+  File "/Users/kanishkkapoor/Desktop/dataAnalytics/ProductDataPipeline/mcp_server/llm_adapter.py", line 32, in <module>
+    _client = OpenAI()
+  File "/opt/miniconda3/lib/python3.13/site-packages/openai/_client.py", line 137, in __init__
+    raise OpenAIError(
+        "The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable"
+    )
+openai.OpenAIError: The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable
+2025-11-16 15:19:15,623 ERROR LLM call failed
+Traceback (most recent call last):
+  File "/Users/kanishkkapoor/Desktop/dataAnalytics/ProductDataPipeline/mcp_server/llm_adapter.py", line 157, in call_llm_for_payload
+    resp = _client.chat.completions.create(
+        model=model,
+    ...<5 lines>...
+        max_tokens=max_tokens,
+    )
+  File "/opt/miniconda3/lib/python3.13/site-packages/openai/_utils/_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "/opt/miniconda3/lib/python3.13/site-packages/openai/resources/chat/completions/completions.py", line 1189, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/opt/miniconda3/lib/python3.13/site-packages/openai/_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda3/lib/python3.13/site-packages/openai/_base_client.py", line 1047, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: fda7735e***************************0:fx. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
